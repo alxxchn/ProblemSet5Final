@@ -42,6 +42,7 @@ public class MemoryGame extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // not sure if it's registering the mouse clicks
         int x = e.getX();
         int y = e.getY();
         int i = (int)(x / width);
