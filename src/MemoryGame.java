@@ -96,59 +96,58 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         // not sure if it's registering the mouse clicks
         int x = e.getX() - 125;
         int y = e.getY() - 110;
-        int i = (int)(x / width);
-        int j = (int)(y / height);
+        int i = (int) (x / width);
+        int j = (int) (y / height);
         int p = i + j * 4;
         System.out.println(p);
 
-        if (isfirstClick){
+        if (isfirstClick) {
             box1 = p;
             show[box1] = true;
             repaint();
             isfirstClick = false;
             numMoves++;
-        }
-        else {
+        } else {
             box2 = p;
             show[box2] = true;
             repaint();
             isfirstClick = true;
             numMoves++;
+
+            if (position[box1] == position[box2]) {
+                System.out.println("they were the same");
+                show[box1] = true;
+                show[box2] = true;
+                repaint();
+            } else {
+                delayTimer.start();
+            }
+
         }
-        if (position[box1] == position[box2]){
-            System.out.println("they were the same");
-            show[box1] = true;
-            show[box2] = true;
-            repaint();
-        }
-        else{
-            delayTimer.start();
+    }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
         }
 
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-}
