@@ -19,6 +19,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     private int width = 200;
     private int height = 150;
     private int numMoves = 0;
+    private boolean isGameOver = false;
     private BufferedImage[] images;
     private boolean[] show = new boolean[position.length];
     private Timer delayTimer;
@@ -79,8 +80,14 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         }
     }
 
-    public void boardFull(){
-
+    public void endGame() {
+        Scanner scnr = new Scanner(System.in);
+        for (int i = 0; i < position.length; i++) {
+            if (show[i] == false) {
+                isGameOver = false;
+            }
+            isGameOver = true;
+        }
     }
 
 
@@ -106,7 +113,6 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             repaint();
             isfirstClick = true;
             numMoves++;
-
             if (position[box1] == position[box2]) {
                 System.out.println("they were the same");
                 show[box1] = true;
@@ -115,32 +121,31 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             } else {
                 delayTimer.start();
             }
-
         }
     }
 
-        @Override
-        public void mousePressed(MouseEvent e) {
+    @Override
+    public void mousePressed(MouseEvent e) {
 
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
     }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+}
