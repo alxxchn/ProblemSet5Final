@@ -80,15 +80,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         }
     }
 
-    public void endGame() {
-        Scanner scnr = new Scanner(System.in);
-        for (int i = 0; i < position.length; i++) {
-            if (show[i] == false) {
-                isGameOver = false;
-            }
-            isGameOver = true;
-        }
-    }
+
 
 
     @Override
