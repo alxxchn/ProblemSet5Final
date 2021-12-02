@@ -22,6 +22,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     private boolean isGameOver = false;
     private BufferedImage[] images;
     private boolean[] show = new boolean[position.length];
+    private Timer delayTimer;
 
     public MemoryGame(){
         addMouseListener(this);
@@ -38,6 +39,16 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             }
         }
         swap(position);
+
+        delayTimer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                show[box1] = false;
+                show[box2] = false;
+                repaint();
+            }
+        });
+        delayTimer.setRepeats(false);
     }
 
     public static void swap(int[] position){
@@ -55,8 +66,8 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         BoardGenerator board = new BoardGenerator();
         board.paint((Graphics2D) g);
         for (int i = 0; i < 16; i++){
-            int x = width * (i % 4);
-            int y = height * (i / 4);
+            int x = width * (i % 4) + 125;
+            int y = height * (i / 4) + 110;
 
             g.setColor(Color.BLUE);
             g.drawRect(x, y, width - 50, height - 50);
@@ -83,8 +94,8 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     @Override
     public void mouseClicked(MouseEvent e) {
         // not sure if it's registering the mouse clicks
-        int x = e.getX();
-        int y = e.getY();
+        int x = e.getX() - 125;
+        int y = e.getY() - 110;
         int i = (int)(x / width);
         int j = (int)(y / height);
         int p = i + j * 4;
@@ -103,15 +114,15 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             repaint();
             isfirstClick = true;
             numMoves++;
-            if (box1 == box2){
-                show[box1] = true;
-                show[box2] = true;
-            }
-            else{
-                //delay
-                show[box1] = false;
-                show[box2] = false;
-            }
+        }
+        if (position[box1] == position[box2]){
+            System.out.println("they were the same");
+            show[box1] = true;
+            show[box2] = true;
+            repaint();
+        }
+        else{
+            delayTimer.start();
         }
 
     }
