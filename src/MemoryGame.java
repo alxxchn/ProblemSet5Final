@@ -1,44 +1,84 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import java.util.Scanner;
 
-public class MemoryGame extends JPanel implements MouseListener {
+public class MemoryGame extends JPanel implements ActionListener, MouseListener {
     private int[] position = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7};
     private String[] filenames = {"dog1.jpg", "dog2.jpg", "dog3.jpg", "dog4.jpg", "dog5.jpg", "dog6.jpg", "dog7.jpg", "dog8.jpg"};
     private int box1, box2;
     private boolean isfirstClick = true;
     private int width = 200;
     private int height = 150;
+    private int numMoves = 0;
+    private boolean isGameOver = false;
+    private BufferedImage[] images;
+    private boolean[] show = new boolean[position.length];
 
-
+    public MemoryGame(){
+        addMouseListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+        images = new BufferedImage[filenames.length];
+        for(int i = 0; i < filenames.length; i++){
+            try {
+                images[i] = ImageIO.read(new File(filenames[i]));
+            }
+            catch (IOException ex){
+                System.out.println("Failed to load image");
+                System.exit(0);
+            }
+        }
+        swap(position);
+    }
 
     public static void swap(int[] position){
-        Random rand = new Random();
-        for (int i = 0; i < 16; i++){
-            position[i] = rand.nextInt(8);
-            // need to figure out how to make this only two, he told us but I can't remember :/
+        for (int i = 0; i < position.length - 1; i++){
+            int tmp = position[i];
+            int rand = (int)(Math.random() * (position.length - i - 1)) + i + 1;
+            position[i] = position[rand];
+            position[rand] = tmp;
+
+            // need to figure out how to make this only two, he told us but I can't remember
         }
     }
 
     public void paint(Graphics g) {
         BoardGenerator board = new BoardGenerator();
         board.paint((Graphics2D) g);
-        swap(position);
         for (int i = 0; i < 16; i++){
-            int x = width * (i % 4) + 125;
-            int y = height * (i / 4) + 110;
+            int x = width * (i % 4);
+            int y = height * (i / 4);
 
             g.setColor(Color.BLUE);
             g.drawRect(x, y, width - 50, height - 50);
             g.setColor(Color.cyan);
             g.fillRect(x, y, width - 50, height - 50); // not sure how to put the image in
             g.setColor(Color.black);
-            g.drawString(filenames[position[i]], x + 50, y + 50);
+            if (show[i] == true) {
+                g.drawImage(images[position[i]], x, y, width - 50, height - 50, this);
+            }
         }
-
     }
+
+    public void endGame() {
+        Scanner scnr = new Scanner(System.in);
+        for (int i = 0; i < position.length; i++) {
+            if (show[i] == false) {
+                isGameOver = false;
+            }
+            isGameOver = true;
+        }
+    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -48,16 +88,30 @@ public class MemoryGame extends JPanel implements MouseListener {
         int i = (int)(x / width);
         int j = (int)(y / height);
         int p = i + j * 4;
+        System.out.println(p);
 
         if (isfirstClick){
             box1 = p;
-            //show box 1, trouble with this
+            show[box1] = true;
+            repaint();
             isfirstClick = false;
+            numMoves++;
         }
         else {
             box2 = p;
-            // show box 2, trouble with this
+            show[box2] = true;
+            repaint();
             isfirstClick = true;
+            numMoves++;
+            if (box1 == box2){
+                show[box1] = true;
+                show[box2] = true;
+            }
+            else{
+                //delay
+                show[box1] = false;
+                show[box2] = false;
+            }
         }
 
     }
@@ -79,6 +133,11 @@ public class MemoryGame extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
     }
 }
