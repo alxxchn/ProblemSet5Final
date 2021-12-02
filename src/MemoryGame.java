@@ -18,8 +18,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     private boolean isfirstClick = true;
     private int width = 200;
     private int height = 150;
-    private int numMoves = 0;
-    private boolean isGameOver = false;
+    private int numMatches = 0;
     private BufferedImage[] images;
     private boolean[] show = new boolean[position.length];
     private Timer delayTimer;
@@ -40,7 +39,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         }
         swap(position);
 
-        delayTimer = new Timer(3000, new ActionListener() {
+        delayTimer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 show[box1] = false;
@@ -49,6 +48,8 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             }
         });
         delayTimer.setRepeats(false);
+
+
     }
 
     public static void swap(int[] position){
@@ -58,7 +59,6 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             position[i] = position[rand];
             position[rand] = tmp;
 
-            // need to figure out how to make this only two, he told us but I can't remember
         }
     }
 
@@ -81,11 +81,10 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     }
 
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
         // not sure if it's registering the mouse clicks
+        Scanner scnr = new Scanner(System.in);
         int x = e.getX() - 125;
         int y = e.getY() - 110;
         int i = (int) (x / width);
@@ -98,18 +97,32 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             show[box1] = true;
             repaint();
             isfirstClick = false;
-            numMoves++;
         } else {
             box2 = p;
             show[box2] = true;
-            repaint();
             isfirstClick = true;
-            numMoves++;
+            repaint();
             if (position[box1] == position[box2]) {
-                System.out.println("they were the same");
                 show[box1] = true;
                 show[box2] = true;
                 repaint();
+                numMatches++;
+                if (numMatches == 8){
+                    System.out.println("You win! Continue? (y/n)");
+                    repaint();
+                    String answer = scnr.next();
+                    if (answer.equals("y")){
+                        numMatches = 0;
+                        swap(position);
+                        for (int k = 0; k < position.length; k++){
+                            show[k] = false;
+                        }
+                        repaint();
+                    }
+                    else{
+                        System.exit(0);
+                    }
+                }
             } else {
                 delayTimer.start();
             }

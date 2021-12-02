@@ -12,6 +12,11 @@ public class BoardGenerator {
         g.setColor(Color.white);
         g.fillRect(8, 8, 985, 750);
 
+        // draw name
+        g.setColor(Color.blue);
+        g.setFont(new Font("serif", Font.BOLD, 40));
+        g.drawString("Memory Game", 375, 75);
+
 
     }
 
