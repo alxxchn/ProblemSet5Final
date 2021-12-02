@@ -1,9 +1,7 @@
 import javax.swing.*;
 
-// TODO: find how to flip the cards over
-// TODO: add the images
 // TODO: keep the game going if user chooses to do so
-// TODO: Fix the shuffling
+
 
 public class Main {
     public static void main(String[] args) {

@@ -19,7 +19,6 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     private int width = 200;
     private int height = 150;
     private int numMoves = 0;
-    private boolean isGameOver = false;
     private BufferedImage[] images;
     private boolean[] show = new boolean[position.length];
     private Timer delayTimer;
@@ -80,14 +79,8 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         }
     }
 
-    public void endGame() {
-        Scanner scnr = new Scanner(System.in);
-        for (int i = 0; i < position.length; i++) {
-            if (show[i] == false) {
-                isGameOver = false;
-            }
-            isGameOver = true;
-        }
+    public void boardFull(){
+
     }
 
 
