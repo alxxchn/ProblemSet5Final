@@ -57,7 +57,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
                 show[box1] = false;
                 show[box2] = false;
                 isDelayed = false;
-                System.out.println("Calling repaint() from timer...");
+                //System.out.println("Calling repaint() from timer...");
                 repaint();
             }
         });
@@ -81,7 +81,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
     }
 
     public void paint(Graphics g) {
-        System.out.println("paint() method called");
+        //System.out.println("paint() method called");
         // draws the cards
         BoardGenerator board = new BoardGenerator();
         board.paint(g);
@@ -108,8 +108,6 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             return;
         }
 
-        //hi
-
         // registers the mouse clicks
         Scanner scnr = new Scanner(System.in);
         // gets the x and y value of the box that is clicked
@@ -125,7 +123,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         if (isfirstClick) {
             box1 = p;
             show[box1] = true;
-            System.out.println("Calling repaint() from 1st click");
+            //System.out.println("Calling repaint() from 1st click");
             repaint();
             isfirstClick = false; // now second click
         }
@@ -134,7 +132,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             box2 = p;
             show[box2] = true;
             isfirstClick = true; // back to first click
-            System.out.println("Calling repaint from 2nd click");
+            //System.out.println("Calling repaint from 2nd click");
             repaint();
             // checks if the images are the same / values in the position array
             if (position[box1] == position[box2]) {
@@ -153,7 +151,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         }
         // ends the game
         if (numMatches == 8){
-            System.out.println("Calling repaint() from winning if");
+            //System.out.println("Calling repaint() from winning if");
             show[box2] = false;
             show[box2] = true;
             repaint();
