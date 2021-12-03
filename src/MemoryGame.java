@@ -108,6 +108,8 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
             return;
         }
 
+        //hi
+
         // registers the mouse clicks
         Scanner scnr = new Scanner(System.in);
         // gets the x and y value of the box that is clicked
