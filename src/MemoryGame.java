@@ -49,7 +49,7 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
         // swaps the positions around in the array
         swap(position);
         // delay to make sure that both boxes are flipped back over slowly if they are not equal
-        delayTimer = new Timer(2000, new ActionListener() {
+        delayTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 show[box1] = false;
@@ -128,29 +128,29 @@ public class MemoryGame extends JPanel implements ActionListener, MouseListener 
                 show[box2] = true;
                 repaint();
                 numMatches++; // adds to the number of matches
-                // ends the game
-                if (numMatches == 8){
-                    System.out.println("You win! Continue? (y/n)");
-                    repaint();
-                    String answer = scnr.next();
-                    // keeps game going
-                    if (answer.equals("y")){
-                        numMatches = 0;
-                        swap(position);
-                        for (int k = 0; k < position.length; k++){
-                            show[k] = false;
-                        }
-                        repaint();
-                    }
-                    // stops the game
-                    else{
-                        System.exit(0);
-                    }
-                }
             }
             // goes to the delayTimer method
             else {
                 delayTimer.start();
+            }
+        }
+        // ends the game
+        if (numMatches == 8){
+            repaint();
+            System.out.println("You win! Continue? (y/n)");
+            String answer = scnr.next();
+            // keeps game going
+            if (answer.equals("y")){
+                numMatches = 0;
+                swap(position);
+                for (int k = 0; k < position.length; k++){
+                    show[k] = false;
+                }
+                repaint();
+            }
+            // stops the game
+            else{
+                System.exit(0);
             }
         }
     }
