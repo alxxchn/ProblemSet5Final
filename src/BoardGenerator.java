@@ -1,8 +1,13 @@
+/**
+ * @brief The BoardGenerator class creates the background of the Memory Game.
+ *
+ * @author: Meg Messinger and Alex Chen
+ */
 import java.awt.*;
-import java.util.Scanner;
 
 public class BoardGenerator {
     public void paint(Graphics g) {
+        // creates the background of the game
 
         // borders
         g.setColor(Color.black);
